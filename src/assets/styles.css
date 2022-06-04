@@ -1,0 +1,35 @@
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.form-buttons button {
+  margin: 5px;
+}
+
+.form-buttons .border {
+  border: 2px solid black;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #18aaaa;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: transparent;
+}

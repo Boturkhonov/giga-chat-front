@@ -1,0 +1,48 @@
+.message {
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 10px;
+  max-width: 45%;
+  min-width: 300px;
+  background: white;
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+
+    .title-name {
+      width: 200px;
+      height: 20px;
+      overflow: hidden;
+      line-height: 20px;
+      color: #1400FF;
+      font-family: Arial, serif;
+      text-overflow: ellipsis;
+    }
+
+    .title-date {
+      width: 110px;
+      height: 20px;
+      overflow: hidden;
+      line-height: 20px;
+      color: #00AC07;
+      font-family: Arial, serif;
+    }
+
+  }
+
+  .body {
+    color: black;
+    word-wrap: anywhere;
+  }
+
+}
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}

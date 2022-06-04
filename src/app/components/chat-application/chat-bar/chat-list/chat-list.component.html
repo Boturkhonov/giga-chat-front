@@ -1,0 +1,107 @@
+<div class="channel d-flex flex-column">
+  <div class="channel-info d-flex flex-row align-items-center">
+    <app-avatar class="avatar" *ngIf="currentChannel"
+                [image]="currentChannel?.avatar?.path"
+                [chatName]="currentChannel.name">
+    </app-avatar>
+    <span class="d-block" [ngClass]="{channelName: currentChannel}">{{ getChannelName() }}</span>
+  </div>
+
+  <div class="chat-list">
+    <div *ngIf="chats && chats.length > 0 ; else noData">
+      <div *ngFor="let chat of chats">
+        <app-chat-field [setChats]="chat"
+                        (chatOpen)="onChatOpen($event)"
+                        [ngClass]="{selected: currentChat?.id === chat.id}">
+
+        </app-chat-field>
+      </div>
+    </div>
+    <ng-template #noData>
+      <div class="no-chats-message">
+        Пока тут нет чатов...
+      </div>
+    </ng-template>
+  </div>
+
+
+  <div class="channel-footer">
+    <div *ngIf="currentChannel; else privateChat">
+      <button *ngIf="canCreateChat()" class="add-chat-button" (click)="onAddChannelChat(addChannelChat)">Добавить чат</button>
+      <button class="info-button" (click)="onChannelInfoClick(channelInfo)">Информация о канале</button>
+    </div>
+    <ng-template #privateChat>
+      <button class="add-chat-button" (click)="onAddPrivateChat(addPrivateChat)">Начать общение</button>
+      <button class="info-button" (click)="onSettingsClick(settings)">Настройки пользователя</button>
+    </ng-template>
+
+    <ng-template #channelInfo let-model>
+      <app-channel-info [channel]="currentChannel" [modal]="model"></app-channel-info>
+    </ng-template>
+  </div>
+
+</div>
+
+<ng-template #addChannelChat let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Добавить чат каналу</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="flex-grow-1">
+        <div class="form-group">
+          <label for="chatName">
+            Имя чата
+          </label>
+          <input id="chatName" type="text"
+                 name="chatName"
+                 [(ngModel)]="addedChat.name"
+                 class="form-control">
+        </div>
+        <div class="form-group">
+          <label for="chatType">
+            Тип чата
+          </label>
+          <select #select id="chatType" (change)="onChatTypeChange(select.value)" class="form-select">
+            <option value="public" #selected>Чат для общения</option>
+            <option value="channel">Канал</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('add channel chat')">Добавить</button>
+  </div>
+</ng-template>
+
+
+<ng-template #addPrivateChat let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Начать общение</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="flex-grow-1">
+        <div class="form-group">
+          <label for="userLogin">
+            Логин пользователя
+          </label>
+          <input id="userLogin" type="text"
+                 name="chatName"
+                 [(ngModel)]="privateChatUser.login"
+                 class="form-control">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('add private chat')">Добавить</button>
+  </div>
+</ng-template>
+
+<ng-template #settings let-modal>
+  <app-profile [user]="currentUser" [editable]="true" [modal]="modal"></app-profile>
+</ng-template>

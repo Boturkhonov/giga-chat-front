@@ -1,0 +1,29 @@
+<div class="chat d-flex flex-column">
+  <div class="chat-info d-flex align-items-center">
+    <app-avatar class="avatar"
+                [chatName]="currentChat.friend ? currentChat.friend.name : currentChat.name"
+                [image]="currentChat.friend ? currentChat.friend.avatar?.path : currentChat.avatar?.path"
+                (click)="onProfileClick(profile)"
+    >
+    </app-avatar>
+    <span class="chat-name">{{ currentChat.friend ? currentChat.friend.name : currentChat.name }}</span>
+
+    <ng-template #profile let-modal>
+      <app-profile [user]="currentChat.friend" [editable]="false" [modal]="modal"></app-profile>
+    </ng-template>
+
+  </div>
+
+  <div class="message-line" #scrollMe>
+    <div *ngFor="let message of messages">
+      <app-chat-message [message]="message"></app-chat-message>
+    </div>
+  </div>
+
+  <div class="message-input d-flex flex-row" *ngIf="canUserSendMessage">
+  <textarea [(ngModel)]="message"
+            placeholder="Введите сообщение...">
+  </textarea>
+    <button (click)="send()"><img src="assets/img/send-button.png" alt="send"></button>
+  </div>
+</div>
